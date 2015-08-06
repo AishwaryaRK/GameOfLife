@@ -38,32 +38,70 @@ public class Game {
 		for (int i = 1; i <= numOfIterations; i++) {
 			getNextGeneration();
 		}
-		System.out.println(liveCells);
 	}
 
 	private void getNextGeneration() {
 		for (Cell cell : liveCells) {
-			
-			int sum = getScore(cell);
-			switch (sum) {
-			case 3:
-				nextGeneration.add(cell);
-				break;
-			case 4:
-				if (liveCells.contains(cell)) {
-					nextGeneration.add(cell);
-				}
-				break;
-			default:
-				break;
-			}
+			decideOnCell(cell);
 		}
 		liveCells = nextGeneration;
 		nextGeneration = new ArrayList<Cell>();
 	}
 
+	private void decideOnCell(Cell cell) {
+		if (nextGeneration.contains(cell)) {
+			return;
+		}
+		int score = getScore(cell);
+		switch (score) {
+		case 3:
+			nextGeneration.add(cell);
+			break;
+		case 4:
+			if (isLive(cell)) {
+				nextGeneration.add(cell);
+			}
+			break;
+		default:
+			return;
+		}
+		List<Cell> neighbours = getNeighbours(cell);
+		for (Cell neighbour : neighbours) {
+			decideOnCell(neighbour);
+		}
+	}
+
 	private int getScore(Cell cell) {
-		// TODO Auto-generated method stub
-		return 0;
+		int score = isLive(cell) ? 1 : 0;
+		List<Cell> neighbours = getNeighbours(cell);
+		for (Cell neighbour : neighbours) {
+			if (isLive(neighbour)) {
+				score++;
+			}
+		}
+		return score;
+	}
+
+	private boolean isLive(Cell cell) {
+		return liveCells.contains(cell);
+	}
+
+	private List<Cell> getNeighbours(Cell cell) {
+		List<Cell> neighbours = new ArrayList<Cell>();
+		int x = cell.getX();
+		int y = cell.getY();
+		neighbours.add(new Cell(x - 1, y + 1));
+		neighbours.add(new Cell(x - 1, y));
+		neighbours.add(new Cell(x - 1, y - 1));
+		neighbours.add(new Cell(x + 1, y + 1));
+		neighbours.add(new Cell(x + 1, y));
+		neighbours.add(new Cell(x + 1, y - 1));
+		neighbours.add(new Cell(x, y - 1));
+		neighbours.add(new Cell(x, y + 1));
+		return neighbours;
+	}
+
+	public void display() {
+		
 	}
 }
