@@ -23,7 +23,7 @@ public class Game {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
 			String line = bufferedReader.readLine();
 			while (line != null) {
-				String[] s = line.split(Messages.getString("Game.0")); //$NON-NLS-1$
+				String[] s = line.split(",");
 				int x = Integer.parseInt(s[0]);
 				int y = Integer.parseInt(s[1]);
 				this.liveCells.add(new Cell(x, y));
