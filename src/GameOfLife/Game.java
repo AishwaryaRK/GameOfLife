@@ -11,7 +11,7 @@ public class Game {
 	private static final int SCORE_THREE = 3;
 	private static final int SCORE_FOUR = 4;
 	private List<Cell> liveCells;
-	List<Cell> nextGeneration;
+	private List<Cell> nextGeneration;
 
 	public Game() {
 		liveCells = new ArrayList<Cell>();
