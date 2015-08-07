@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-	private static final int SCORE_THREEE = 3;
+	private static final int SCORE_THREE = 3;
 	private static final int SCORE_FOUR = 4;
 	private List<Cell> liveCells;
 	List<Cell> nextGeneration;
@@ -18,7 +18,7 @@ public class Game {
 		nextGeneration = new ArrayList<Cell>();
 	}
 
-	public void initializeGrid(String fileName) {
+	public void initialize(String fileName) {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
 			String line = bufferedReader.readLine();
@@ -56,7 +56,7 @@ public class Game {
 		}
 		int score = getScore(cell);
 		switch (score) {
-		case SCORE_THREEE:
+		case SCORE_THREE:
 			nextGeneration.add(cell);
 			break;
 		case SCORE_FOUR:
@@ -67,7 +67,7 @@ public class Game {
 		default:
 			return;
 		}
-		List<Cell> neighbours = getNeighbours(cell);
+		List<Cell> neighbours = cell.getNeighbours();
 		for (Cell neighbour : neighbours) {
 			decideOnCell(neighbour);
 		}
@@ -75,7 +75,7 @@ public class Game {
 
 	private int getScore(Cell cell) {
 		int score = isLive(cell) ? 1 : 0;
-		List<Cell> neighbours = getNeighbours(cell);
+		List<Cell> neighbours = cell.getNeighbours();
 		for (Cell neighbour : neighbours) {
 			if (isLive(neighbour)) {
 				score++;
@@ -86,21 +86,6 @@ public class Game {
 
 	private boolean isLive(Cell cell) {
 		return liveCells.contains(cell);
-	}
-
-	private List<Cell> getNeighbours(Cell cell) {
-		List<Cell> neighbours = new ArrayList<Cell>();
-		int x = cell.getX();
-		int y = cell.getY();
-		neighbours.add(new Cell(x - 1, y + 1));
-		neighbours.add(new Cell(x - 1, y));
-		neighbours.add(new Cell(x - 1, y - 1));
-		neighbours.add(new Cell(x + 1, y + 1));
-		neighbours.add(new Cell(x + 1, y));
-		neighbours.add(new Cell(x + 1, y - 1));
-		neighbours.add(new Cell(x, y - 1));
-		neighbours.add(new Cell(x, y + 1));
-		return neighbours;
 	}
 
 	public void display() {

@@ -1,5 +1,8 @@
 package GameOfLife;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cell {
 	private int x;
 	private int y;
@@ -15,6 +18,19 @@ public class Cell {
 
 	public int getY() {
 		return y;
+	}
+
+	public List<Cell> getNeighbours() {
+		List<Cell> neighbours = new ArrayList<Cell>();
+		neighbours.add(new Cell(x - 1, y + 1));
+		neighbours.add(new Cell(x - 1, y));
+		neighbours.add(new Cell(x - 1, y - 1));
+		neighbours.add(new Cell(x + 1, y + 1));
+		neighbours.add(new Cell(x + 1, y));
+		neighbours.add(new Cell(x + 1, y - 1));
+		neighbours.add(new Cell(x, y - 1));
+		neighbours.add(new Cell(x, y + 1));
+		return neighbours;
 	}
 
 	@Override
